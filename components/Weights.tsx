@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
 	View,
+	Text,
 	TextProps,
 	StyleProp,
 	ViewProps,
@@ -8,7 +9,7 @@ import {
 } from "react-native";
 import CustomButton from "./CustomButton";
 import CustomText from "./CustomText";
-import { weightsStyles as styles } from "../libraries/styles";
+
 interface IProps extends TextProps {
 	weight?: string;
 	onPress?: () => void;
@@ -19,17 +20,27 @@ interface IProps extends TextProps {
 const Weights = ({ style, onPress, children, ...props }: IProps) => {
 	const [weight, setWeight] = useState<number>(1);
 	return (
-		<View style={styles.weightsContainer}>
-			<CustomText style={styles.weight} text={weight} />
-			<View style={styles.weightsButtonGroup}>
+		<View style={weightsStyles.weightsContainer}>
+			<CustomText style={weightsStyles.textArea} text={weight} />
+			<View style={weightsStyles.weightsButtonGroup}>
 				<CustomButton
-					style={styles.button}
+					outerStyles={weightsStyles.button}
+					innerStyles={{
+						backgroundColor: "white",
+						borderRadius: 10,
+						margin: 1
+					}}
 					onPress={() => setWeight(oldWeight => oldWeight + 1)}
 					title='+ 1'
 				/>
 
 				<CustomButton
-					style={styles.button}
+					outerStyles={weightsStyles.button}
+					innerStyles={{
+						backgroundColor: "white",
+						borderRadius: 10,
+						margin: 1
+					}}
 					disabled={weight === 1}
 					onPress={() =>
 						setWeight(oldWeight =>
@@ -44,3 +55,26 @@ const Weights = ({ style, onPress, children, ...props }: IProps) => {
 };
 
 export default Weights;
+
+const weightsStyles = StyleSheet.create({
+	weightsContainer: {
+		flexDirection: "row",
+		justifyContent: "center",
+		alignItems: "center",
+		borderWidth: StyleSheet.hairlineWidth,
+		borderColor: "#aaa",
+		borderRadius: 10,
+		padding: 10
+	},
+	textArea: {
+		flex: 1,
+		alignItems: "center"
+	},
+	weightsButtonGroup: {
+		justifyContent: "center",
+		alignItems: "center"
+	},
+	button: {
+		width: "100%"
+	}
+});
